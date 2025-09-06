@@ -1,37 +1,39 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { dummyDateTimeData, dummyShowsData } from '../assets/assets';
 import BlurCircle from '../components/BlurCircle';
-import { Heart, PlayCircleIcon, StarIcon } from 'lucide-react';  
+import { Heart, PlayCircleIcon, StarIcon } from 'lucide-react';
 import timeFormat from '../lib/timeFormat';
 import DateSelect from '../components/DateSelect';
+import MovieCard from '../components/MovieCard';
+import Loading from '../components/Loading';
 
 const MovieDetails = () => {
+
+  const naviagte = useNavigate();
   const { id } = useParams();
   const [show, setShow] = useState(null);
 
   const getShow = async () => {
     const foundShow = dummyShowsData.find(show => show._id === id);
-    setShow({
-      movie: foundShow,
-      dateTime: dummyDateTimeData
-    });
+    if (foundShow) {
+      setShow({
+        movie: foundShow,
+        dateTime: dummyDateTimeData
+      })
+    }
   };
 
   useEffect(() => {
     getShow();
   }, [id]);
 
-  if (!show || !show.movie) {
-    return <div>Loading...</div>;
-  }
-
-  return (
+  return show ? (
     <div className='px-6 md:px-16 lg:px-40 pt-30 md:pt-50'>
       <div className='flex flex-col md:flex-row gap-8 max-w-6xl mx-auto'>
         <img
-          src={show.movie.poster_path || 'https://via.placeholder.com/300x450?text=No+Image'}
-          alt={show.movie.title || 'Movie Poster'}
+          src={show.movie.poster_path }
+          alt={show.movie.title }
           className='max-md:mx-auto rounded-xl h-104 max-w-70 object-cover'
         />
 
@@ -73,8 +75,21 @@ const MovieDetails = () => {
       </div>
 
       <DateSelect dateTime={show.dateTime} id={id} />
+
+      <p className='text-lg font-medium mt-20 mb-8'> You May also Like</p>
+      <div className='flex flex-wrap max-sm:justify-center gap-8'>
+        {dummyShowsData.slice(0, 4).map((movie, index) => (
+          <MovieCard key={index} movie={movie} />
+        ))}
+      </div>
+
+      <div className='flex justify-center mt-20'>
+        <button onClick={() => { naviagte('/movies'); scrollTo(0, 0) }} className='px-10 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-md font-medium cursor-pointer'>Show More</button>
+
+      </div>
+
     </div>
-  );
+  ) : <Loading />
 };
 
 export default MovieDetails;
