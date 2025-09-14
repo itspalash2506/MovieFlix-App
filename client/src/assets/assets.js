@@ -315,7 +315,7 @@ export const dummyBookingData = [
         },
         "amount": 49,
         "bookedSeats": ["A1"],
-        "isPaid": true,
+        "isPaid": false,
     },
     {
         "_id": "68396334fb83252d82e17295",
@@ -328,6 +328,6 @@ export const dummyBookingData = [
         },
         "amount": 147,
         "bookedSeats": ["A1", "A2","A3"],
-        "isPaid": true,
+        "isPaid": false,
     },
 ]
