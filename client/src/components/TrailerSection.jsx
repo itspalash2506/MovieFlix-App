@@ -14,7 +14,15 @@ const TrailerSection = () => {
 
             <div className='relative mt-6'>
                 <BlurCircle top='-100px' right='-100px' />
-                <ReactPlayer url={currentTrailer.videoUrl} controls={true} width="960px" height="540px" className='mx-auto max-w-auto' />
+                <div className="flex justify-center items-center w-full max-w-3xl mx-auto rounded-lg overflow-hidden bg-black aspect-video">
+                    <ReactPlayer
+                        url="https://www.youtube.com/watch?v=IgQccny7EX8&list=RDIgQccny7EX8&start_radio=1&ab_channel=ChillHub"
+                        controls={true}
+                        width="100%"
+                        height="100%"
+                        style={{ maxHeight: 540, background: 'black' }}
+                    />
+                </div>
             </div>
 
             <div className='group grid grid-cols-4 gap-4 md:gap-8 mt-8 max-w-3xl mx-auto'>
